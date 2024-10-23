@@ -1428,7 +1428,7 @@ function KILL_PROCESS() {
 
 Script_Path="$(cd $(dirname $0) 2> /dev/null ; pwd 2> /dev/null)"
 Script_File="$0"
-Script_Url="https://ghp.ci/https://raw.githubusercontent.com/ilxp/openwrt-autoupdate/main/autoupdate/files/bin/autoupdate"
+Script_Url="https://raw.githubusercontent.com/ilxp/openwrt-autoupdate/main/autoupdate/files/bin/autoupdate"
 
 
 Tmp_Path=/tmp/autoupdate
