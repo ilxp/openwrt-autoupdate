@@ -63,7 +63,6 @@ function SHELL_HELP() {
 	exit
 }
 
-#从etc/default文件获取相关信息：
 function SHOW_VARIABLE() {
 	TITLE
 	cat <<EOF
@@ -375,7 +374,6 @@ function LOAD_VARIABLE() {
 			Github=${_Github}
         fi
 	fi
-	#获取API，将API文件发布在release名和标签名均为AutoUpdate的名下：
 	Firmware_Author="${Github##*com/}"
 	Github_Release="${Github}/releases/download/AutoUpdate"
 	Github_Raw="https://raw.githubusercontent.com/${Firmware_Author}/master"
@@ -566,8 +564,7 @@ function ANALYZE_API() {
 		AutoBuild-${OP_REPO}-${TARGET_PROFILE}-* | Update_Logs.json)
 			LOGGER "可用固件/日志: ${name}"
 			eval format=$(egrep -o '\.[a-z]+.+' <<< ${name} | cut -c2-10)
-			eval version=$(egrep -o "R[0-9.]+-[0-9]+" <<< ${name})  #格式为：R24.01.01-20240101
-		    #eval version=$(egrep -o "Snapshot-[0-9]+" <<< ${name}) #格式为：Snapshot-20240101
+			eval version=$(egrep -o "R[0-9.]+-[0-9]+" <<< ${name})
 			eval sha256=$(egrep -o "\-[a-z0-9]+" <<< ${name} | cut -c2-6 | awk 'END{print}')
 			eval browser_download_url=$(jq ".assets[${i}].browser_download_url" ${API_Cache} 2> /dev/null)
 			eval size=$(jq ".assets[${i}].size" ${API_Cache} 2> /dev/null | awk '{a=$1/1048576} {printf("%.2f\n",a)}')
@@ -1153,15 +1150,15 @@ function Proxy_X() {
 	case "${Type}" in
 	raw)
 		F=https://proxy.hyy2001.workers.dev/$(echo ${URL##*com/})
-		G=https://ghp.ci/${URL}
+		G=https://mirror.ghproxy.com/${URL}
 	;;
 	release)
 		F=https://proxy.hyy2001.workers.dev/$(echo ${URL##*com/})
-		G=https://ghp.ci/${URL}
+		G=https://mirror.ghproxy.com/${URL}
 	;;
 	codeload)
 		F=https://proxy.hyy2001.workers.dev/$(echo ${URL##*com/})
-		G=https://ghp.ci/${URL}
+		G=https://mirror.ghproxy.com/${URL}
 	;;
 	esac
 	while [[ $1 ]];do
@@ -1428,8 +1425,7 @@ function KILL_PROCESS() {
 
 Script_Path="$(cd $(dirname $0) 2> /dev/null ; pwd 2> /dev/null)"
 Script_File="$0"
-Script_Url="https://raw.githubusercontent.com/ilxp/openwrt-autoupdate/main/autoupdate/files/bin/autoupdate"
-
+Script_Url="https://raw.githubusercontent.com/Hyy2001X/AutoBuild-Packages/master/autoupdate/files/bin/autoupdate"
 
 Tmp_Path=/tmp/autoupdate
 Config_Path=/etc/autoupdate
